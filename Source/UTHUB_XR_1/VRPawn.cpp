@@ -45,7 +45,7 @@ AVRPawn::AVRPawn()
 	AnchorPoint->SetupAttachment(L_MotionController);
 
 	//Instance Anchor to visualize
-	R_AnchorPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Anchor_Point"));
+	R_AnchorPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("R_Anchor_Point"));
 	//Assign to pawn
 	R_AnchorPoint->SetupAttachment(R_MotionController);
 
