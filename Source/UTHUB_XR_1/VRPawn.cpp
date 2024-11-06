@@ -88,8 +88,8 @@ void AVRPawn::TeleportAction()
 void AVRPawn::PickUpObj()
 {
 
-	FVector TeleportStart = R_MotionController->GetComponentLocation();
-	FVector TeleportEnd = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector() * 3000.f);
+	FVector TeleportStart = L_MotionController->GetComponentLocation();
+	FVector TeleportEnd = L_MotionController->GetComponentLocation() + (L_MotionController->GetForwardVector() * 3000.f);
 
 	
 	if(!bObjectGrabbed)
@@ -101,7 +101,9 @@ void AVRPawn::PickUpObj()
 			if (GrabHit.GetComponent()->IsSimulatingPhysics() && GrabHit.GetActor()->ActorHasTag("Pickable"))
 			{
 				GrabHit.GetComponent()->SetSimulatePhysics(false);
-				GrabHit.GetActor()->AttachToComponent(R_MotionController, FAttachmentTransformRules::SnapToTargetIncludingScale);
+				GrabHit.GetActor()->AttachToComponent(R_AnchorPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
+
 
 				bObjectGrabbed = true;
 			}
@@ -158,7 +160,7 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 
 		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::PickUpObj);
-		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::DropObj);
+		//EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::DropObj);
 
 
 
