@@ -1,0 +1,15 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-UTHUB_XR_1-0035.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UTHUB_XR_1Editor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\UTHUB_XR_1\UTHUB_XR_1.init.gen.cpp.obj"
+"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\UTHUB_XR_1\VRPawn.gen.cpp.obj"
+"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\UTHUB_XR_1\UTHUB_XR_1.cpp.obj"
+"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\UTHUB_XR_1\VRPawn.cpp.obj"
+"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\UTHUB_XR_1\Default.rc2.res"
+/OUT:"D:\epic\Master\UTHUB_XR_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\UTHUB_XR_1\UnrealEditor-UTHUB_XR_1-0035.lib"
