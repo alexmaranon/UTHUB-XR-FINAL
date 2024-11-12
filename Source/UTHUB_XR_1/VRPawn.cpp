@@ -40,16 +40,24 @@ AVRPawn::AVRPawn()
 	R_MotionController->SetTrackingMotionSource(FName("Right"));
 
 	//Instance Anchor to visualize
-	AnchorPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Anchor_Point"));
+	AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Anchor_Point"));
 	//Assign to pawn
 	AnchorPoint->SetupAttachment(L_MotionController);
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh>MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/HandVR/QK_CustomHand.QK_CustomHand'"));
+	
+	USkeletalMesh* Hands_Mesh = MeshAsset.Object;
+	
+	
 
+	
 	//Instance Anchor to visualize
-	R_AnchorPoint = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("R_Anchor_Point"));
+	R_AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("R_Anchor_Point"));
 	//Assign to pawn
 	R_AnchorPoint->SetupAttachment(R_MotionController);
 
-
+	R_AnchorPoint->SetSkeletalMesh(Hands_Mesh);
+	AnchorPoint->SetSkeletalMesh(Hands_Mesh);
+	AnchorPoint->SetRelativeScale3D(FVector(1.0f, -1.0f, 1.0f));
 	bObjectGrabbed = false;
 	
 }
@@ -88,8 +96,8 @@ void AVRPawn::TeleportAction()
 void AVRPawn::PickUpObj()
 {
 
-	FVector TeleportStart = L_MotionController->GetComponentLocation();
-	FVector TeleportEnd = L_MotionController->GetComponentLocation() + (L_MotionController->GetForwardVector() * 3000.f);
+	FVector TeleportStart = R_MotionController->GetComponentLocation();
+	FVector TeleportEnd = TeleportStart + (R_MotionController->GetForwardVector() * 3000.f);
 
 	
 	if(!bObjectGrabbed)
@@ -101,7 +109,7 @@ void AVRPawn::PickUpObj()
 			if (GrabHit.GetComponent()->IsSimulatingPhysics() && GrabHit.GetActor()->ActorHasTag("Pickable"))
 			{
 				GrabHit.GetComponent()->SetSimulatePhysics(false);
-				GrabHit.GetActor()->AttachToComponent(R_AnchorPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+				GrabHit.GetActor()->AttachToComponent(R_MotionController, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
 
 

@@ -43,10 +43,10 @@ public:
 	UMotionControllerComponent* R_MotionController;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "VR Controllers")
-	UStaticMeshComponent* AnchorPoint;
-
+	USkeletalMeshComponent* AnchorPoint;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "VR Controllers")
-	UStaticMeshComponent* R_AnchorPoint;
+	USkeletalMeshComponent* R_AnchorPoint;
 
 
 
