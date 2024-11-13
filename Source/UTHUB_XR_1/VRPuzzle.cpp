@@ -4,6 +4,7 @@
 #include "VRPuzzle.h"
 
 #include "Components/BoxComponent.h"
+#include "Components/PrimitiveComponent.h"
 
 // Sets default values
 AVRPuzzle::AVRPuzzle()
@@ -12,7 +13,7 @@ AVRPuzzle::AVRPuzzle()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Puzzle_box = CreateDefaultSubobject<UBoxComponent>(TEXT("Puzzle_Zone"));
-	Puzzle_box->SetCollisionProfileName(FName("TRIGGER"));
+	Puzzle_box->SetCollisionProfileName(FName("Trigger"));
 
 	RootComponent = Puzzle_box;
 
@@ -55,5 +56,7 @@ void AVRPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Othe
 void AVRPuzzle::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex)
 {
+
+
 }
 

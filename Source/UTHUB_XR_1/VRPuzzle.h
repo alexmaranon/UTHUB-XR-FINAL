@@ -7,6 +7,7 @@
 #include "VRPuzzle.generated.h"
 
 class UBoxComponent;
+class USceneComponent;
 
 UCLASS()
 class UTHUB_XR_1_API AVRPuzzle : public AActor
