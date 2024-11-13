@@ -73,6 +73,8 @@ void AVRPawn::Teleport()
 	FHitResult TeleportHit;
 	FActorSpawnParameters SpawnInfo;
 
+	if (ActorVR->Destroy())
+
 	if(GetWorld()->LineTraceSingleByChannel(TeleportHit, TeleportStart,TeleportEnd, ECC_GameTraceChannel1))
 	{
 		DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 3.f);
@@ -163,7 +165,7 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		//Bind
-		EnhancedInputComponent->BindAction(TeleportInput, ETriggerEvent::Started, this,&AVRPawn::Teleport);
+		EnhancedInputComponent->BindAction(TeleportInput, ETriggerEvent::Triggered, this,&AVRPawn::Teleport);
 		EnhancedInputComponent->BindAction(TeleportInput, ETriggerEvent::Completed, this,&AVRPawn::TeleportAction);
 
 
