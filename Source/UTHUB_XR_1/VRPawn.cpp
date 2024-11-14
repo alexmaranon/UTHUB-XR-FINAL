@@ -73,11 +73,14 @@ void AVRPawn::Teleport()
 	FHitResult TeleportHit;
 	FActorSpawnParameters SpawnInfo;
 
-	if (ActorVR->Destroy())
+	if (ActorVR!=nullptr)
+	{
+		ActorVR->Destroy();
+	}
 
 	if(GetWorld()->LineTraceSingleByChannel(TeleportHit, TeleportStart,TeleportEnd, ECC_GameTraceChannel1))
 	{
-		DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 3.f);
+		DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 0.1f);
 
 		ActorVR = GetWorld()->SpawnActor<ATeleportActor>(TeleportHit.ImpactPoint,FRotator(0.f),SpawnInfo);
 
@@ -87,7 +90,12 @@ void AVRPawn::Teleport()
 
 void AVRPawn::TeleportAction()
 {
-	SetActorLocation(ActorVR->GetActorLocation());
+	FVector TeleportPosition = ActorVR->GetActorLocation();
+	//Aquí añadir el tamaño del player
+	TeleportPosition.Z += 50;
+	//TeleportPosition.Z += GetComponentsBoundingBox().GetExtent().Z;
+
+	SetActorLocation(TeleportPosition);
 
 	if(ActorVR->Destroy())
 	{
