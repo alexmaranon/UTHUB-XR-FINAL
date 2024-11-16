@@ -36,6 +36,7 @@ void AVRPuzzle::BeginPlay()
 void AVRPuzzle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 }
 
@@ -51,6 +52,7 @@ void AVRPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Othe
 		OtherActor->SetActorRotation(FRotator(0.f));
 
 	}
+
 }
 
 void AVRPuzzle::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
