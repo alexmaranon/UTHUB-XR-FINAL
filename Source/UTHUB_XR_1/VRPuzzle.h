@@ -13,7 +13,12 @@ UCLASS()
 class UTHUB_XR_1_API AVRPuzzle : public AActor
 {
 	GENERATED_BODY()
-	
+
+
+
+private:
+
+
 public:	
 	// Sets default values for this actor's properties
 	AVRPuzzle();
