@@ -25,3 +25,15 @@ void AKeypad::Tick(float DeltaTime)
 
 }
 
+bool AKeypad::actualValue(FString actualNumber)
+{
+	if(actualNumber==NeededValue)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+

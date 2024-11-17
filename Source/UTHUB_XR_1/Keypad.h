@@ -23,5 +23,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "KeyPad")
+	FString NeededValue;
+
+	UFUNCTION(BlueprintCallable, Category ="KeyPad")
+	bool actualValue(FString actualNumber);
+
 
 };
