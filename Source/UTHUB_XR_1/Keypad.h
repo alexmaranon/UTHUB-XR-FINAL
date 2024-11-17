@@ -26,6 +26,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "KeyPad")
 	FString NeededValue;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "KeyPad")
+	AActor* SelectedDoor;
+
 	UFUNCTION(BlueprintCallable, Category ="KeyPad")
 	bool actualValue(FString actualNumber);
 
