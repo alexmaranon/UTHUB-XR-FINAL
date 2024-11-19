@@ -13,6 +13,7 @@ class UCameraComponent;
 class UMotionControllerComponent;
 class ATeleportActor;
 class UInputMappingContext;
+//class UInputMappingHands;
 class UInputAction;
 
 
@@ -27,6 +28,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputMappingContext* DefaultMappingContext;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	UInputMappingContext* MappingHands;
+
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* TeleportInput;
@@ -65,6 +72,9 @@ public:
 	void PickUpObj();
 
 	void DropObj();
+
+	void ReleaseHand();
+	void GripHand();
 
 protected:
 	// Called when the game starts or when spawned

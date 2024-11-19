@@ -59,6 +59,23 @@ AVRPawn::AVRPawn()
 	AnchorPoint->SetSkeletalMesh(Hands_Mesh);
 	AnchorPoint->SetRelativeScale3D(FVector(1.0f, -1.0f, 1.0f));
 	bObjectGrabbed = false;
+
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance> HandAnimBP(TEXT("/Game/HandVR/BP_HandAni.BP_HandAni_C"));
+
+	// Verificar si se encontraron la malla y el Animation Blueprint
+	if (MeshAsset.Succeeded())
+	{
+		AnchorPoint->SetSkeletalMesh(Hands_Mesh);
+		R_AnchorPoint->SetSkeletalMesh(Hands_Mesh);
+	}
+
+	if (HandAnimBP.Succeeded())
+	{
+		UClass* AnimClass = HandAnimBP.Class;
+		AnchorPoint->SetAnimInstanceClass(AnimClass);
+		R_AnchorPoint->SetAnimInstanceClass(AnimClass);
+	}
 	
 }
 
@@ -153,6 +170,7 @@ void AVRPawn::BeginPlay()
 		if(UEnhancedInputLocalPlayerSubsystem* InputSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			InputSystem->AddMappingContext(DefaultMappingContext, 0);
+			InputSystem->AddMappingContext(MappingHands, 1);
 		}
 	}
 	
@@ -180,6 +198,8 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::PickUpObj);
 		//EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::DropObj);
 
+		//EnhancedInputComponent->BindAction(GripInputAction, ETriggerEvent::Triggered, this, &AVRPawn::GripHand);
+		//EnhancedInputComponent->BindAction(ReleaseInputAction, ETriggerEvent::Triggered, this, &AVRPawn::ReleaseHand);
 
 
 	}
