@@ -14,8 +14,6 @@
 // Sets default values
 AVRPawn::AVRPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 
 	VRCore = CreateDefaultSubobject<USceneComponent>(TEXT("VR_Body"));
 
@@ -39,45 +37,25 @@ AVRPawn::AVRPawn()
 	//Assign Hand
 	R_MotionController->SetTrackingMotionSource(FName("Right"));
 
+
+	//Attach to pawn
+	//Assign Hand
+
+
 	//Instance Anchor to visualize
 	AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Anchor_Point"));
 	//Assign to pawn
 	AnchorPoint->SetupAttachment(L_MotionController);
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh>MeshAsset(TEXT("/Script/Engine.SkeletalMesh'/Game/HandVR/QK_CustomHand.QK_CustomHand'"));
-	
-	USkeletalMesh* Hands_Mesh = MeshAsset.Object;
-	
-	
 
-	
 	//Instance Anchor to visualize
-	R_AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("R_Anchor_Point"));
+	R_AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("R_Anchor_Point_Test"));
 	//Assign to pawn
 	R_AnchorPoint->SetupAttachment(R_MotionController);
 
-	R_AnchorPoint->SetSkeletalMesh(Hands_Mesh);
-	AnchorPoint->SetSkeletalMesh(Hands_Mesh);
-	AnchorPoint->SetRelativeScale3D(FVector(1.0f, -1.0f, 1.0f));
-	bObjectGrabbed = false;
 
-
-	static ConstructorHelpers::FClassFinder<UAnimInstance> HandAnimBP(TEXT("/Game/HandVR/BP_HandAni.BP_HandAni_C"));
-
-	// Verificar si se encontraron la malla y el Animation Blueprint
-	if (MeshAsset.Succeeded())
-	{
-		AnchorPoint->SetSkeletalMesh(Hands_Mesh);
-		R_AnchorPoint->SetSkeletalMesh(Hands_Mesh);
-	}
-
-	if (HandAnimBP.Succeeded())
-	{
-		UClass* AnimClass = HandAnimBP.Class;
-		AnchorPoint->SetAnimInstanceClass(AnimClass);
-		R_AnchorPoint->SetAnimInstanceClass(AnimClass);
-	}
 	
 }
+
 
 void AVRPawn::Teleport()
 {
@@ -160,10 +138,14 @@ void AVRPawn::DropObj()
 
 }
 
+
+
+
 // Called when the game starts or when spawned
 void AVRPawn::BeginPlay()
 {
 	Super::BeginPlay();
+
 
 	if(APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
@@ -173,6 +155,7 @@ void AVRPawn::BeginPlay()
 			InputSystem->AddMappingContext(MappingHands, 1);
 		}
 	}
+
 	
 }
 
@@ -196,6 +179,9 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 
 		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::PickUpObj);
+
+
+
 		//EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::DropObj);
 
 		//EnhancedInputComponent->BindAction(GripInputAction, ETriggerEvent::Triggered, this, &AVRPawn::GripHand);
@@ -205,4 +191,3 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	}
 
 }
-

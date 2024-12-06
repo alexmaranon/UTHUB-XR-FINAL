@@ -15,6 +15,8 @@ class ATeleportActor;
 class UInputMappingContext;
 //class UInputMappingHands;
 class UInputAction;
+class USkeletalMeshComponent;
+class UAnimInstance;
 
 
 UCLASS()
@@ -24,6 +26,7 @@ class UTHUB_XR_1_API AVRPawn : public APawn
 
 public:
 	// Sets default values for this pawn's properties
+
 	AVRPawn();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
@@ -34,9 +37,9 @@ public:
 	UInputMappingContext* MappingHands;
 
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* TeleportInput;
+
 
 	USceneComponent* VRCore;
 
@@ -49,12 +52,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "VR Controllers")
 	UMotionControllerComponent* R_MotionController;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "VR Controllers")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "VR Controllers")
 	USkeletalMeshComponent* AnchorPoint;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "VR Controllers")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "VR Controllers")
 	USkeletalMeshComponent* R_AnchorPoint;
-
 
 
 	ATeleportActor* ActorVR;
@@ -73,12 +75,12 @@ public:
 
 	void DropObj();
 
-	void ReleaseHand();
-	void GripHand();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	
 
 	
 	bool bObjectGrabbed;
