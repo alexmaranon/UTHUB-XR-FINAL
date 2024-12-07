@@ -23,9 +23,14 @@ public:
 	// Sets default values for this actor's properties
 	AVRPuzzle();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Puzzle")
+	bool IsAttached;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Category = "Puzzle")
 	UBoxComponent* Puzzle_box;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
+	AActor* Selected_Key;
 
 	USceneComponent* Snap_point;
 
