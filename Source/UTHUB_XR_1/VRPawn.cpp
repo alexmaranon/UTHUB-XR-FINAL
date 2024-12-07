@@ -42,7 +42,7 @@ AVRPawn::AVRPawn()
 	//Assign Hand
 
 
-	//Instance Anchor to visualize
+	/*//Instance Anchor to visualize
 	AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Anchor_Point"));
 	//Assign to pawn
 	AnchorPoint->SetupAttachment(L_MotionController);
@@ -50,7 +50,7 @@ AVRPawn::AVRPawn()
 	//Instance Anchor to visualize
 	R_AnchorPoint = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("R_Anchor_Point_Test"));
 	//Assign to pawn
-	R_AnchorPoint->SetupAttachment(R_MotionController);
+	R_AnchorPoint->SetupAttachment(R_MotionController);*/
 
 
 	
@@ -62,8 +62,8 @@ void AVRPawn::Teleport()
 
 	//FVector TeleportLocation;
 
-	FVector TeleportStart = L_MotionController->GetComponentLocation() ;
-	FVector TeleportEnd = L_MotionController->GetComponentLocation() + (L_MotionController->GetForwardVector()*3000.f) ;
+	FVector TeleportStart = R_MotionController->GetComponentLocation() ;
+	FVector TeleportEnd = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector()*3000.f) ;
 
 	FHitResult TeleportHit;
 	FActorSpawnParameters SpawnInfo;
@@ -176,11 +176,26 @@ void AVRPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+void AVRPawn:: MoveForward(float value)
+{
+	if(value!= 0.0f)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Me Muevo"));
+		FVector ForwardDirection = GetActorForwardVector();
+		FVector NewLocation = GetActorLocation() + (ForwardDirection * value * 1000.f * GetWorld()->GetDeltaSeconds());
+
+		// Establece la nueva posición del actor
+		SetActorLocation(NewLocation);
+		//AddMovementInput(GetPaw)
+	}
+}
 
 // Called to bind functionality to input
 void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	InputComponent->BindAxis("MoveForward", this, &AVRPawn::MoveForward);
 
 	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
@@ -190,6 +205,8 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 
 		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::PickUpObj);
+
+		
 
 
 

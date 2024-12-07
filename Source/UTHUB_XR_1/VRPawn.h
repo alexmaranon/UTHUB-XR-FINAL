@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* TeleportInput;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	UInputAction* MoveInput;
+
 
 	USceneComponent* VRCore;
 
@@ -57,6 +60,9 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "VR Controllers")
 	USkeletalMeshComponent* R_AnchorPoint;
+
+	UFUNCTION()
+	void MoveForward(float value);
 
 
 	ATeleportActor* ActorVR;
