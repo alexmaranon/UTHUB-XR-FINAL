@@ -75,9 +75,13 @@ void AVRPawn::Teleport()
 
 	if(GetWorld()->LineTraceSingleByChannel(TeleportHit, TeleportStart,TeleportEnd, ECC_GameTraceChannel1))
 	{
-		DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 0.1f);
+		
+		
+			DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 0.1f);
 
-		ActorVR = GetWorld()->SpawnActor<ATeleportActor>(TeleportHit.ImpactPoint,FRotator(0.f),SpawnInfo);
+			ActorVR = GetWorld()->SpawnActor<ATeleportActor>(TeleportHit.ImpactPoint, FRotator(0.f), SpawnInfo);
+		
+		
 
 	}
 
@@ -85,18 +89,25 @@ void AVRPawn::Teleport()
 
 void AVRPawn::TeleportAction()
 {
-	FVector TeleportPosition = ActorVR->GetActorLocation();
-	//Aquí añadir el tamaño del player
-	TeleportPosition.Z += 50;
-	//TeleportPosition.Z += GetComponentsBoundingBox().GetExtent().Z;
 
-	SetActorLocation(TeleportPosition);
-
-	if(ActorVR->Destroy())
+	if(ActorVR)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
+		FVector TeleportPosition = ActorVR->GetActorLocation();
+		//Aquí añadir el tamaño del player
+		TeleportPosition.Z += 120;
+		//TeleportPosition.Z += GetComponentsBoundingBox().GetExtent().Z;
+
+		SetActorLocation(TeleportPosition);
+
+		if (ActorVR->Destroy())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
+		}
 	}
-}
+	}
+	
+
+	
 
 void AVRPawn::PickUpObj()
 {
