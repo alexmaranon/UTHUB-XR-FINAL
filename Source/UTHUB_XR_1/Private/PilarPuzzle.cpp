@@ -31,6 +31,21 @@ APilarPuzzle::APilarPuzzle()
 
 }
 
+void APilarPuzzle::CheckOnExitCol()
+{
+	if(PlacedActor)
+	{
+		
+		if (FVector::Dist(PlacedActor->GetActorLocation(), Puzzle_box->GetComponentLocation())>40)
+		{
+			IsAttached = false;
+			PlacedActor = nullptr;
+			RightKey = false;
+		}
+	}
+	
+}
+
 // Called when the game starts or when spawned
 void APilarPuzzle::BeginPlay()
 {
@@ -53,7 +68,7 @@ void APilarPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 	{
 		PlacedActor = OtherActor;
 		OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
-		OtherActor->SetActorRotation(FRotator(0.f));
+		//OtherActor->SetActorRotation(FRotator(0.f));
 
 		IsAttached = true;
 		RightKey = true;
@@ -61,9 +76,9 @@ void APilarPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 	}
 	else if(OtherComponent->IsSimulatingPhysics())
 	{
-
+		PlacedActor = OtherActor;
 		OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
-		OtherActor->SetActorRotation(FRotator(0.f));
+		//OtherActor->SetActorRotation(FRotator(0.f));
 
 		IsAttached = true;
 		RightKey = false;
@@ -74,11 +89,7 @@ void APilarPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 void APilarPuzzle::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex)
 {
-	if(PlacedActor)
-	{
-		IsAttached = false;
-		PlacedActor = nullptr;
-	}
+	
 }
 
 

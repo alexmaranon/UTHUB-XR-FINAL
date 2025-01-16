@@ -36,7 +36,11 @@ public:
 
 	USceneComponent* Snap_point;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Puzzle")
 	AActor* PlacedActor;
+
+	UFUNCTION(BlueprintCallable, Category="Puzzle")
+	void CheckOnExitCol();
 
 
 protected:
