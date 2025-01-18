@@ -87,13 +87,14 @@ protected:
 	virtual void BeginPlay() override;
 
 	
-
+	UStaticMeshComponent* LeverComponent;
 	
 	bool bObjectGrabbed;
 	
 	FHitResult GrabHit;
 
-	
+	FVector InitialHandPosition;
+	FRotator InitialLeverRotation;
 
 public:	
 	// Called every frame

@@ -112,12 +112,14 @@ void AVRPawn::TeleportAction()
 void AVRPawn::PickUpObj()
 {
 
-	FVector TeleportStart = R_MotionController->GetComponentLocation();
-	FVector TeleportEnd = TeleportStart + (R_MotionController->GetForwardVector() * 3000.f);
+	
 
 	
 	if(!bObjectGrabbed)
 	{
+		FVector TeleportStart = R_MotionController->GetComponentLocation();
+		FVector TeleportEnd = TeleportStart + (R_MotionController->GetForwardVector() * 3000.f);
+
 		if (GetWorld()->LineTraceSingleByChannel(GrabHit, TeleportStart, TeleportEnd, ECC_GameTraceChannel1))
 		{
 			DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 3.f);
@@ -132,25 +134,57 @@ void AVRPawn::PickUpObj()
 				bObjectGrabbed = true;
 			}
 
+			if (GrabHit.GetActor()->ActorHasTag("Lever"))
+			{
+				if(!LeverComponent)
+				{
+					LeverComponent = Cast<UStaticMeshComponent>(GrabHit.GetComponent());
+
+					InitialHandPosition = R_MotionController->GetComponentLocation() - LeverComponent->GetComponentLocation();
+					InitialHandPosition = InitialHandPosition.GetSafeNormal(); // Normalizamos el vector
+
+					// Guardar la rotación inicial de la rueda
+					InitialLeverRotation = LeverComponent->GetComponentRotation();
+				}
+
+			}
+		}
+		if (LeverComponent)
+		{
+			FVector CurrentHandPosition = R_MotionController->GetComponentLocation() - LeverComponent->GetComponentLocation();
+			CurrentHandPosition = CurrentHandPosition.GetSafeNormal(); // Normalizamos el vector
+
+			// Calcular el ángulo entre la posición inicial y la actual usando el producto escalar
+			float Angle = FMath::Acos(FVector::DotProduct(InitialHandPosition, CurrentHandPosition));
+
+			// Determinar la dirección de la rotación (hacia adelante o atrás)
+			FVector CrossProduct = FVector::CrossProduct(InitialHandPosition, CurrentHandPosition);
+			float Direction = (CrossProduct.Z > 0) ? 1.0f : -1.0f; // Asumiendo que la rueda rota en el eje Z
+
+			// Aplicar la rotación acumulativa a la rueda
+			FRotator NewRotation = InitialLeverRotation;
+			NewRotation.Pitch += FMath::RadiansToDegrees(Angle) * Direction; // Convertimos de radianes a grados
+
+			LeverComponent->SetWorldRotation(NewRotation);
 		}
 	}
-	else
-	{
-		DropObj();
-	}
+
 }
 
 void AVRPawn::DropObj()
 {
-
-	GrabHit.GetComponent()->SetSimulatePhysics(true);
-	GrabHit.GetActor()->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-	bObjectGrabbed = false;
+	if(bObjectGrabbed)
+	{
+		GrabHit.GetComponent()->SetSimulatePhysics(true);
+		GrabHit.GetActor()->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+		bObjectGrabbed = false;
+	}
+	if(LeverComponent)
+	{
+		LeverComponent = nullptr;
+	}
 
 }
-
-
-
 
 // Called when the game starts or when spawned
 void AVRPawn::BeginPlay()
@@ -204,7 +238,9 @@ void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		EnhancedInputComponent->BindAction(TeleportInput, ETriggerEvent::Completed, this,&AVRPawn::TeleportAction);
 
 
-		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::PickUpObj);
+		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Triggered, this,&AVRPawn::PickUpObj);
+
+		EnhancedInputComponent->BindAction(PickUpInput, ETriggerEvent::Completed, this,&AVRPawn::DropObj);
 
 		
 
