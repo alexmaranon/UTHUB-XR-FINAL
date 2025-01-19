@@ -62,7 +62,7 @@ void AVRPawn::Teleport()
 
 	//FVector TeleportLocation;
 
-	FVector TeleportStart = R_MotionController->GetComponentLocation() ;
+	FVector TeleportStart = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector() * 20.f);
 	FVector TeleportEnd = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector()*3000.f) ;
 
 	FHitResult TeleportHit;
@@ -123,7 +123,7 @@ void AVRPawn::PickUpObj()
 	
 	if(!bObjectGrabbed)
 	{
-		FVector TeleportStart = R_MotionController->GetComponentLocation();
+		FVector TeleportStart = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector() * 20.f);
 		FVector TeleportEnd = TeleportStart + (R_MotionController->GetForwardVector() * 3000.f);
 
 		if (GetWorld()->LineTraceSingleByChannel(GrabHit, TeleportStart, TeleportEnd, ECC_GameTraceChannel1))
