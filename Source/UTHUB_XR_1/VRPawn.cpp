@@ -130,7 +130,7 @@ void AVRPawn::PickUpObj()
 		{
 			DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 3.f);
 
-			if (GrabHit.GetComponent()->IsSimulatingPhysics() && GrabHit.GetActor()->ActorHasTag("Pickable"))
+			if (GrabHit.GetActor()->ActorHasTag("Pickable"))
 			{
 				GrabHit.GetComponent()->SetSimulatePhysics(false);
 				GrabHit.GetActor()->AttachToComponent(R_MotionController, FAttachmentTransformRules::SnapToTargetNotIncludingScale);

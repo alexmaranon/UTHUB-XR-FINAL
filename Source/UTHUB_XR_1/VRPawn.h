@@ -79,6 +79,7 @@ public:
 
 	void PickUpObj();
 
+	UFUNCTION(BlueprintCallable, Category = "KeyPad")
 	void DropObj();
 
 

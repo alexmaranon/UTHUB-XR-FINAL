@@ -63,26 +63,32 @@ void APilarPuzzle::Tick(float DeltaTime)
 void APilarPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-
-	if (OtherActor == Selected_Key && OtherComponent->IsSimulatingPhysics())
+	if(OtherActor->ActorHasTag("key"))
 	{
-		PlacedActor = OtherActor;
-		OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
-		//OtherActor->SetActorRotation(FRotator(0.f));
+		if (OtherActor == Selected_Key && OtherComponent->IsSimulatingPhysics())
+		{
+			PlacedActor = OtherActor;
+			OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
+			OtherActor->SetActorRotation(FRotator(0.f));
 
-		IsAttached = true;
-		RightKey = true;
+			OtherComponent->SetSimulatePhysics(false);
 
+			IsAttached = true;
+			RightKey = true;
+
+		}
+		else if (OtherComponent->IsSimulatingPhysics())
+		{
+			PlacedActor = OtherActor;
+			OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
+			OtherActor->SetActorRotation(FRotator(0.f));
+			OtherComponent->SetSimulatePhysics(false);
+
+			IsAttached = true;
+			RightKey = false;
+		}
 	}
-	else if(OtherComponent->IsSimulatingPhysics())
-	{
-		PlacedActor = OtherActor;
-		OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
-		//OtherActor->SetActorRotation(FRotator(0.f));
-
-		IsAttached = true;
-		RightKey = false;
-	}
+	
 
 }
 
