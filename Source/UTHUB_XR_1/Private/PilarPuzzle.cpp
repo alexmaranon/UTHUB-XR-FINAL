@@ -6,6 +6,8 @@
 #include "Components/BoxComponent.h"
 #include "Components/PrimitiveComponent.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "UTHUB_XR_1/VRPawn.h"
 // Sets default values
 APilarPuzzle::APilarPuzzle()
 {
@@ -65,7 +67,15 @@ void APilarPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 {
 	if(OtherActor->ActorHasTag("key"))
 	{
-		if (OtherActor == Selected_Key && OtherComponent->IsSimulatingPhysics())
+		APawn* MiPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		AVRPawn* VRPawn = Cast<AVRPawn>(MiPawn);
+
+		if (VRPawn)
+		{
+			VRPawn->DropObj();
+		}
+
+		if (OtherActor == Selected_Key)
 		{
 			PlacedActor = OtherActor;
 			OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
@@ -77,7 +87,7 @@ void APilarPuzzle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 			RightKey = true;
 
 		}
-		else if (OtherComponent->IsSimulatingPhysics())
+		else
 		{
 			PlacedActor = OtherActor;
 			OtherActor->SetActorLocation(Puzzle_box->GetComponentLocation());
