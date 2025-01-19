@@ -73,20 +73,15 @@ void AVRPawn::Teleport()
 		ActorVR->Destroy();
 	}
 
-	if (GetWorld()== nullptr) return;
+	if (GetWorld() != nullptr) return;
 
 	if(GetWorld()->LineTraceSingleByChannel(TeleportHit, TeleportStart,TeleportEnd, ECC_GameTraceChannel1))
 	{
-		
 		if(TeleportHit.bBlockingHit)
 		{
-			if (TeleportHit.GetActor()->ActorHasTag("Floor"))
-			{
-				DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 0.1f);
+			DrawDebugLine(GetWorld(), TeleportStart, TeleportEnd, FColor::Red, false, 0.1f);
 
-				ActorVR = GetWorld()->SpawnActor<ATeleportActor>(TeleportHit.ImpactPoint, FRotator(0.f), SpawnInfo);
-			}
-			
+			ActorVR = GetWorld()->SpawnActor<ATeleportActor>(TeleportHit.ImpactPoint, FRotator(0.f), SpawnInfo);
 		}
 			
 	}
