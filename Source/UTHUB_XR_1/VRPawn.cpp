@@ -220,9 +220,9 @@ void AVRPawn:: MoveForward(float value)
 {
 	if(value!= 0.0f)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Me Muevo"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Me Muevo"));
 		FVector ForwardDirection = GetActorForwardVector();
-		FVector NewLocation = GetActorLocation() + (ForwardDirection * value * 1000.f * GetWorld()->GetDeltaSeconds());
+		FVector NewLocation = GetActorLocation() + (ForwardDirection * value * 80.f * GetWorld()->GetDeltaSeconds());
 
 		// Establece la nueva posición del actor
 		SetActorLocation(NewLocation);
