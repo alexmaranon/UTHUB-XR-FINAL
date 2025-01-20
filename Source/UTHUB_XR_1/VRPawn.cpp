@@ -221,27 +221,49 @@ void AVRPawn:: MoveForward(float value)
 	{
 		if (VRCamera)
 		{
-			// Obtén la rotación de la cámara
-			FRotator CameraRotation = VRCamera->GetComponentRotation();
+			
+			if (value >= 0.0f)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Adelante"));
 
-			// Solo interesa la dirección horizontal (ignorar Pitch)
-			FRotator YawRotation(0.0f, CameraRotation.Yaw, 0.0f);
+				// Obtén la rotación de la cámara
+				FRotator CameraRotation = VRCamera->GetComponentRotation();
 
-			// Calcula la dirección hacia adelante basada en la cámara
-			FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+				FRotator YawRotation(0.0f, CameraRotation.Yaw, 0.0f);
 
-			// Calcula la nueva ubicación
-			FVector NewLocation = GetActorLocation() + (ForwardDirection * value * 80.f * GetWorld()->GetDeltaSeconds());
+				FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-			// Establece la nueva posición del actor
-			SetActorLocation(NewLocation);
+				FVector NewLocation = GetActorLocation() + (ForwardDirection * value * valorMovimiento * GetWorld()->GetDeltaSeconds());
 
-			// Mensaje de depuración opcional
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Me Muevo en dirección de la cámara"));
+
+				SetActorLocation(NewLocation);
+
+			}
+			if (value <= 0.0f)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Atras"));
+
+
+				// Obtén la rotación de la cámara
+				FRotator CameraRotation = VRCamera->GetComponentRotation();
+
+				FRotator YawRotation(0.0f, CameraRotation.Yaw, 0.0f);
+
+				FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+				FVector NewLocation = GetActorLocation() + (ForwardDirection * value * valorMovimientoatras * GetWorld()->GetDeltaSeconds());
+
+
+				SetActorLocation(NewLocation);
+			}
+
+			
 		}
+
 	}
 	
 }
+
 
 // Called to bind functionality to input
 void AVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

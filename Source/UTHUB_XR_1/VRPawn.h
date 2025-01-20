@@ -61,8 +61,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "VR Controllers")
 	USkeletalMeshComponent* R_AnchorPoint;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Movimiento")
 	void MoveForward(float value);
+
 
 
 	ATeleportActor* ActorVR;
@@ -82,6 +83,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "KeyPad")
 	void DropObj();
 
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Valor")
+	float valorMovimiento;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Valor")
+	float valorMovimientoatras;
+
+	
+	
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -91,6 +102,11 @@ protected:
 	UStaticMeshComponent* LeverComponent;
 	
 	bool bObjectGrabbed;
+
+
+	
+	
+	
 	
 	FHitResult GrabHit;
 	FHitResult TeleportHit;
