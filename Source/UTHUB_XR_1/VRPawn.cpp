@@ -63,10 +63,9 @@ void AVRPawn::Teleport()
 	//FVector TeleportLocation;
 
 	FVector TeleportStart = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector() * 20.f);
-	FVector TeleportEnd = R_MotionController->GetComponentLocation() + (R_MotionController->GetForwardVector()*3000.f) ;
+	FVector TeleportEnd = TeleportStart + (R_MotionController->GetForwardVector() * 3000.f);
 
-	FHitResult TeleportHit;
-	FActorSpawnParameters SpawnInfo;
+	
 
 	if (ActorVR!=nullptr)
 	{

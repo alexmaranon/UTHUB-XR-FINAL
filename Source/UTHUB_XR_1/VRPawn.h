@@ -93,7 +93,8 @@ protected:
 	bool bObjectGrabbed;
 	
 	FHitResult GrabHit;
-
+	FHitResult TeleportHit;
+	FActorSpawnParameters SpawnInfo;
 	FVector InitialHandPosition;
 	FRotator InitialLeverRotation;
 
