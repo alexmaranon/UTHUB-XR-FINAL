@@ -106,7 +106,7 @@ void AVRPawn::TeleportAction()
 
 		if (ActorVR->Destroy())
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
 		}
 	}
 	}
@@ -133,7 +133,7 @@ void AVRPawn::PickUpObj()
 			{
 				GrabHit.GetComponent()->SetSimulatePhysics(false);
 				GrabHit.GetActor()->AttachToComponent(R_MotionController, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Destroy"));
 
 
 				bObjectGrabbed = true;
@@ -224,7 +224,7 @@ void AVRPawn:: MoveForward(float value)
 			
 			if (value >= 0.0f)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Adelante"));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Adelante"));
 
 				// Obtén la rotación de la cámara
 				FRotator CameraRotation = VRCamera->GetComponentRotation();
@@ -241,7 +241,7 @@ void AVRPawn:: MoveForward(float value)
 			}
 			if (value <= 0.0f)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Atras"));
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Atras"));
 
 
 				// Obtén la rotación de la cámara
