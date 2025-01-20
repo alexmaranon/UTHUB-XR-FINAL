@@ -219,14 +219,28 @@ void AVRPawn:: MoveForward(float value)
 {
 	if(value!= 0.0f)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Me Muevo"));
-		FVector ForwardDirection = GetActorForwardVector();
-		FVector NewLocation = GetActorLocation() + (ForwardDirection * value * 80.f * GetWorld()->GetDeltaSeconds());
+		if (VRCamera)
+		{
+			// Obtén la rotación de la cámara
+			FRotator CameraRotation = VRCamera->GetComponentRotation();
 
-		// Establece la nueva posición del actor
-		SetActorLocation(NewLocation);
-		//AddMovementInput(GetPaw)
+			// Solo interesa la dirección horizontal (ignorar Pitch)
+			FRotator YawRotation(0.0f, CameraRotation.Yaw, 0.0f);
+
+			// Calcula la dirección hacia adelante basada en la cámara
+			FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+			// Calcula la nueva ubicación
+			FVector NewLocation = GetActorLocation() + (ForwardDirection * value * 80.f * GetWorld()->GetDeltaSeconds());
+
+			// Establece la nueva posición del actor
+			SetActorLocation(NewLocation);
+
+			// Mensaje de depuración opcional
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Me Muevo en dirección de la cámara"));
+		}
 	}
+	
 }
 
 // Called to bind functionality to input
